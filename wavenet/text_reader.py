@@ -16,7 +16,7 @@ def find_files(directory, pattern='*.txt'):
 
 def _read_text(filename):
   with tf.gfile.GFile(filename, "r") as f:
-    return list(f.read().decode("utf-8").replace("\n", ""))
+    return list(f.read().decode("utf-8").replace("\n", "").lower())
 
 def load_generic_text(directory):
     '''Generator that yields text raw from the directory.'''
@@ -24,7 +24,8 @@ def load_generic_text(directory):
     for filename in files:
         text = _read_text(filename)        
         for index, item in enumerate(text):
-            text[index] = ord(text[index])
+            enc = ord(text[index])
+            text[index] = enc if enc < 150 else enc-975
         text = np.array(text, dtype='float32')
         text = text.reshape(-1, 1)
         yield text, filename

@@ -12,7 +12,7 @@ import tensorflow as tf
 from wavenet import WaveNetModel, text_reader
 
 SAMPLES = 16000
-LOGDIR = './logdir'
+LOGDIR = '.\logdir'
 WINDOW = 8000
 WAVENET_PARAMS = './wavenet_params.json'
 SAVE_EVERY = None
@@ -73,10 +73,14 @@ def write_text(waveform, filename):
     text = waveform
     y = []
     for index, item in enumerate(text):
-        y.append(chr(text[index]))
-    print('Prediction is: ', ''.join(str(e) for e in y))
-    y = np.array(y)
-    np.savetxt(filename, y.reshape(1, y.shape[0]), delimiter="", newline="\n", fmt="%s")
+        ch = text[index]
+        decoded = ch if ch<97 else ch+975
+        y.append(chr(decoded))
+    txt = ''.join(str(e) for e in y)
+    print('Prediction is: ', txt)
+    text_file = open(filename, "w")
+    text_file.write(txt)
+    text_file.close()
     print('Updated text file at {}'.format(filename))
 
 

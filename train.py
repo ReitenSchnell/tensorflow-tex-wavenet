@@ -15,7 +15,7 @@ from wavenet import WaveNetModel, TextReader
 
 BATCH_SIZE = 1
 DATA_DIRECTORY = './data'
-LOGDIR_ROOT = './logdir'
+LOGDIR_ROOT = '.\logdir'
 CHECKPOINT_EVERY = 500
 NUM_STEPS = 4000
 LEARNING_RATE = 0.001
